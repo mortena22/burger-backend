@@ -46,26 +46,26 @@ namespace ReviewApi.Test.Persistence.DataService
       context.Database.EnsureDeleted();
       context.Database.EnsureCreated();
 
-      //Add ReviewScoreCategories
-      context.ReviewScoreCategories.Add(new ReviewScoreCategory
-      {
-        Id = 1,
-        Description = "Taste"
-      });
+      ////Add ReviewScoreCategories
+      //context.ReviewScoreCategories.Add(new ReviewScoreCategory
+      //{
+      //  Id = 1,
+      //  Description = "Taste"
+      //});
 
-      context.ReviewScoreCategories.Add(new ReviewScoreCategory
-      {
-        Id = 2,
-        Description = "Texture"
-      });
+      //context.ReviewScoreCategories.Add(new ReviewScoreCategory
+      //{
+      //  Id = 2,
+      //  Description = "Texture"
+      //});
 
-      context.ReviewScoreCategories.Add(new ReviewScoreCategory
-      {
-        Id = 3,
-        Description = "VisualPresentation"
-      });
+      //context.ReviewScoreCategories.Add(new ReviewScoreCategory
+      //{
+      //  Id = 3,
+      //  Description = "VisualPresentation"
+      //});
 
-      context.SaveChanges();
+      //context.SaveChanges();
     }
 
     public void Cleanup()
