@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ReviewApi.Persistence.Migrations.cd
+namespace ReviewApi.Persistence.Migrations
 {
     public partial class initialCreate : Migration
     {
@@ -51,6 +51,12 @@ namespace ReviewApi.Persistence.Migrations.cd
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReviewScores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReviewScores_Reviews_ReviewId",
+                        column: x => x.ReviewId,
+                        principalTable: "Reviews",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -67,18 +73,23 @@ namespace ReviewApi.Persistence.Migrations.cd
                 table: "ReviewScoreCategories",
                 columns: new[] { "Id", "Description" },
                 values: new object[] { 3, "VisualPresentation" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReviewScores_ReviewId",
+                table: "ReviewScores",
+                column: "ReviewId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Reviews");
-
-            migrationBuilder.DropTable(
                 name: "ReviewScoreCategories");
 
             migrationBuilder.DropTable(
                 name: "ReviewScores");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
         }
     }
 }

@@ -2,11 +2,11 @@
 {
   public class ReviewReadDto : ReviewWriteDto
   {
-    public ReviewReadDto(string description, IEnumerable<ReviewScoreDto> scores) : base(description, scores)
+    public ReviewReadDto(int id, string description, string imageName, IEnumerable<ReviewScoreDto> scores) : base(description, imageName, scores)
     {
-
+      Id = id;
     }
 
-    public int Id { get; set; }
+    public int Id { get; }
   }
 }

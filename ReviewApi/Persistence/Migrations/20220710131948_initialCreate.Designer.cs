@@ -8,10 +8,10 @@ using ReviewApi.Persistence.Context;
 
 #nullable disable
 
-namespace ReviewApi.Persistence.Migrations.cd
+namespace ReviewApi.Persistence.Migrations
 {
     [DbContext(typeof(ReviewContext))]
-    [Migration("20220710121527_initialCreate")]
+    [Migration("20220710131948_initialCreate")]
     partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,6 +62,8 @@ namespace ReviewApi.Persistence.Migrations.cd
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ReviewId");
+
                     b.ToTable("ReviewScores");
                 });
 
@@ -93,6 +95,22 @@ namespace ReviewApi.Persistence.Migrations.cd
                             Id = 3,
                             Description = "VisualPresentation"
                         });
+                });
+
+            modelBuilder.Entity("ReviewApi.Persistence.Model.ReviewScore", b =>
+                {
+                    b.HasOne("ReviewApi.Persistence.Model.Review", "Review")
+                        .WithMany("Scores")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Review");
+                });
+
+            modelBuilder.Entity("ReviewApi.Persistence.Model.Review", b =>
+                {
+                    b.Navigation("Scores");
                 });
 #pragma warning restore 612, 618
         }

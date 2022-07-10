@@ -41,7 +41,7 @@ namespace ReviewApi.Test.Controller
         CreateReviewScore(ReviewScoreCategory.Taste)
       };
 
-      return new ReviewReadDto(CreateRandomText(50), reviewScores);
+      return new ReviewReadDto(1, CreateRandomText(50), CreateRandomText(10), reviewScores);
     }
 
     private ReviewScoreDto CreateReviewScore(ReviewScoreCategory category)

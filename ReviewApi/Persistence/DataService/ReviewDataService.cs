@@ -19,28 +19,23 @@ namespace ReviewApi.Persistence.DataService
     {
       _logger.LogInformation("Method: {methodName} called with rastaurantId: {rastaurantId}", nameof(GetReviewsForRastaurantAsync), rastaurantId);
 
-      var result = new List<ReviewReadDto>();
-
       using var context = _contextFactory.CreateDbContext();
 
-      foreach (var review in context.Reviews.Where(a => a.RastaurantReviewed == rastaurantId))
-      {
-        var scores = await context.ReviewScores.Where(a => a.ReviewId == review.Id).Select(a => new ReviewScoreDto
-        {
-          Score = a.Score,
-          Category = (ReviewScoreCategory)a.CategoryId
-        }).ToListAsync();
+      return await (from review in context.Reviews
+                    where review.RastaurantReviewed == rastaurantId
 
-        result.Add(new ReviewReadDto(review.Description, scores)
-        {
-          ImageName = review.ImageName
-        });
-      }
+                    let reviewScores = (from score in review.Scores
+                                        select new ReviewScoreDto
+                                        {
+                                          Score = score.Score,
+                                          Category = (ReviewScoreCategory)score.CategoryId
+                                        })
 
-      return result;
+                    let reviewDto = new ReviewReadDto(review.Id, review.Description, review.ImageName, reviewScores)
+
+                    select reviewDto).ToListAsync();
     }
   }
 }
 
-//EF Migration
 //Docker Image

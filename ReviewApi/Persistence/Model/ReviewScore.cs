@@ -8,6 +8,8 @@
     public decimal Score { get; set; }
 
     public int ReviewId { get; set; }
+    public Review Review { get; set; }
+
     public int CategoryId { get; set; }
   }
 }

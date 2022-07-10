@@ -2,11 +2,11 @@
 {
   public class ReviewWriteDto
   {
-    public ReviewWriteDto(string description, IEnumerable<ReviewScoreDto> scores)
+    public ReviewWriteDto(string description, string imageName, IEnumerable<ReviewScoreDto> scores)
     {
       Description = description;
+      ImageName = imageName ?? "Stock_Image";
       Scores = scores;
-      ImageName = "Stock_Image";
     }
 
     public string Description { get; set; }
