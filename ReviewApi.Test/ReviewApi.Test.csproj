@@ -22,14 +22,14 @@
     <None Remove="Persistence\Context\" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
     <None Remove="Persistence\DataService\" />
-    <None Remove="Controller\" />
     <None Remove="FakeItEasy" />
+    <None Remove="Application\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Persistence\" />
     <Folder Include="Persistence\Context\" />
     <Folder Include="Persistence\DataService\" />
-    <Folder Include="Controller\" />
+    <Folder Include="Application\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReviewApi\ReviewApi.csproj" />

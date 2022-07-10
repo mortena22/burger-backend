@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ReviewApi.Application;
 using ReviewApi.Persistence.Context;
 using ReviewApi.Persistence.DataService;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContextFactory<ReviewContext>(options => options.UseSqlite(Environment.GetEnvironmentVariable("connection_string") ?? "Data Source=Review.db"));
+builder.Services.AddScoped<IReviewApplication, ReviewApplication>();
 builder.Services.AddScoped<IReviewDataService, ReviewDataService>();
 
 var app = builder.Build();

@@ -1,6 +1,7 @@
 ﻿using FakeItEasy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ReviewApi.Domain.Model;
 using ReviewApi.Persistence.Context;
 using ReviewApi.Persistence.DataService;
 using ReviewApi.Persistence.Model;
@@ -24,7 +25,7 @@ namespace ReviewApi.Test.Persistence.DataService
       return new ReviewDataService(_dbContextFactory, _logger);
     }
 
-    public void CreateReviewsForCompany(int rastaurantId)
+    public void CreateReviewsForRastaurant(int rastaurantId)
     {
       using var context = _dbContextFactory.CreateDbContext();
 
@@ -38,41 +39,33 @@ namespace ReviewApi.Test.Persistence.DataService
       context.SaveChanges();
     }
 
-    public void InitTestDatabase()
+    public void CreateReviewForRastaurant(int rastaurantId, int userId)
     {
       using var context = _dbContextFactory.CreateDbContext();
 
-      //Create database
-      context.Database.EnsureDeleted();
-      context.Database.EnsureCreated();
+      var review = new Review
+      {
+        Description = "A very tasty burger",
+        ImageName = "stock_image",
+        CreationDate = DateTime.Now,
+        CreatedByUser = userId,
+        RastaurantReviewed = rastaurantId
+      };
+      context.Reviews.Add(review);
+      context.SaveChanges();
 
-      ////Add ReviewScoreCategories
-      //context.ReviewScoreCategories.Add(new ReviewScoreCategory
-      //{
-      //  Id = 1,
-      //  Description = "Taste"
-      //});
+      AddReviewScore(context, 1, review.Id);
+      AddReviewScore(context, 2, review.Id);
+      AddReviewScore(context, 3, review.Id);
 
-      //context.ReviewScoreCategories.Add(new ReviewScoreCategory
-      //{
-      //  Id = 2,
-      //  Description = "Texture"
-      //});
-
-      //context.ReviewScoreCategories.Add(new ReviewScoreCategory
-      //{
-      //  Id = 3,
-      //  Description = "VisualPresentation"
-      //});
-
-      //context.SaveChanges();
+      context.SaveChanges();
     }
 
-    public void Cleanup()
+    public ReviewCreateDto CreateReviewCreateDto()
     {
-      using var context = _dbContextFactory.CreateDbContext();
+      var scores = CreateReviewScoreDtos();
 
-      context.Database.EnsureDeleted();
+      return new ReviewCreateDto("A Burger", scores);
     }
 
     private void AddReviewScore(ReviewContext context, int category, int reviewId)
@@ -111,6 +104,16 @@ namespace ReviewApi.Test.Persistence.DataService
       context.SaveChanges();
 
       return reviews;
+    }
+
+    private List<ReviewScoreDto> CreateReviewScoreDtos()
+    {
+      return new List<ReviewScoreDto>
+      {
+        new ReviewScoreDto{Category = Domain.Model.ReviewScoreCategory.Taste, Score = 2},
+        new ReviewScoreDto{Category = Domain.Model.ReviewScoreCategory.Texture, Score = 3},
+        new ReviewScoreDto{Category = Domain.Model.ReviewScoreCategory.VisualPresentation, Score = 5}
+      };
     }
   }
 }
