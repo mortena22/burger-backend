@@ -10,19 +10,19 @@
       _fixture = new ReviewDataServiceFixture();
     }
 
-    [TestInitialize()]
+    [TestInitialize]
     public void TestInit()
     {
       _fixture.InitTestDatabase();
     }
 
-    [TestCleanup()]
+    [TestCleanup]
     public void TestCleanup()
     {
       _fixture.Cleanup();
     }
 
-    [TestMethod()]
+    [TestMethod, TestCategory("IntegrationTest")]
     public async Task GetReviewsForRestaurant_NoReviewsForRestaurant_ReturnsEmptyCollection_Async()
     {
       //Arrange
@@ -36,7 +36,7 @@
       Assert.IsFalse(actual.Any());
     }
 
-    [TestMethod()]
+    [TestMethod, TestCategory("IntegrationTest")]
     public async Task GetReviewsForRestaurant_ReviewsFound_ReturnsCollectionWithReviws_Async()
     {
       //Arrange

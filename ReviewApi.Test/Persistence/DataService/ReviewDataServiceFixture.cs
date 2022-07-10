@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FakeItEasy;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ReviewApi.Persistence.Context;
 using ReviewApi.Persistence.DataService;
 using ReviewApi.Persistence.Model;
@@ -9,15 +11,17 @@ namespace ReviewApi.Test.Persistence.DataService
   public class ReviewDataServiceFixture
   {
     private readonly IDbContextFactory<ReviewContext> _dbContextFactory;
+    private readonly ILogger<ReviewDataService> _logger;
 
     public ReviewDataServiceFixture()
     {
       _dbContextFactory = new MockDbContextFactory<ReviewContext>();
+      _logger = A.Fake<ILogger<ReviewDataService>>(); 
     }
 
     public IReviewDataService CreateSut()
     {
-      return new ReviewDataService(_dbContextFactory);
+      return new ReviewDataService(_dbContextFactory, _logger);
     }
 
     public void CreateReviewsForCompany(int rastaurantId)
