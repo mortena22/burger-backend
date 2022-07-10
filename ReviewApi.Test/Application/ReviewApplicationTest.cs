@@ -14,38 +14,38 @@ namespace ReviewApi.Test.Application
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public async Task CreateReviewsForRastaurant_ReturnsIdDataService_Await()
+    public async Task CreateReviewsForRestaurant_ReturnsIdDataService_Await()
     {
       //Arrange
       var sut = _fixture.CreateSut();
-      var rastaurantId = 10;
+      var restaurantId = 10;
       var userId = 25;
       var reviewToBeCreated = _fixture.CreateReviewCreateDto();
       var expectedResult = 100;
 
-      A.CallTo(() => _fixture.DataService.CreateReviewFormRastaurantAsync(reviewToBeCreated, rastaurantId, userId))
+      A.CallTo(() => _fixture.DataService.CreateReviewFormRestaurantAsync(reviewToBeCreated, restaurantId, userId))
         .Returns(Task.FromResult<int?>(expectedResult));
 
       //Act
-      var actualResult = await sut.CreateReviewForRastaurantAsync(reviewToBeCreated, rastaurantId, userId);
+      var actualResult = await sut.CreateReviewForRestaurantAsync(reviewToBeCreated, restaurantId, userId);
 
       //Assert
       Assert.AreEqual(expectedResult, actualResult);
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public async Task GetReviewsForRastaurant_ReturnsReviewFromDataService_Await()
+    public async Task GetReviewsForRestaurant_ReturnsReviewFromDataService_Await()
     {
       //Arrange
       var sut = _fixture.CreateSut();
-      var rastaurantId = 10;
+      var restaurantId = 10;
       var expectedResult = _fixture.CreateReviews();
 
-      A.CallTo(() => _fixture.DataService.GetReviewsForRastaurantAsync(rastaurantId))
+      A.CallTo(() => _fixture.DataService.GetReviewsForRestaurantAsync(restaurantId))
         .Returns(Task.FromResult<IEnumerable<ReviewReadDto>>(expectedResult));
 
       //Act
-      var actualResult = await sut.GetReviewsForRastaurantAsync(rastaurantId);
+      var actualResult = await sut.GetReviewsForRestaurantAsync(restaurantId);
 
       //Assert
       Assert.AreEqual(expectedResult.Count, actualResult.Count());

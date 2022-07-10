@@ -35,7 +35,7 @@ namespace ReviewApi.Persistence.Migrations
                     b.Property<string>("ImageName")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RastaurantReviewed")
+                    b.Property<int>("RestaurantReviewed")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

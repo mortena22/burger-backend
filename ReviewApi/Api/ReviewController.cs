@@ -18,33 +18,33 @@ namespace ReviewApi.Api
     }
 
     [HttpPost]
-    [Route("rastaurants/{rastaurant-id:int}/reviews")]
-    public async Task<ActionResult<int>> CreateReviewsForRastaurantAsync([FromBody] ReviewCreateDto dto, [FromRoute(Name = "rastaurant-id")] int rastaurantId)
+    [Route("restaurants/{restaurant-id:int}/reviews")]
+    public async Task<ActionResult<int>> CreateReviewsForRestaurantAsync([FromBody] ReviewCreateDto dto, [FromRoute(Name = "restaurant-id")] int restaurantId)
     {
-      _logger.LogInformation("Method: {methodName} called with rastaurantId: {rastaurantId}", nameof(CreateReviewsForRastaurantAsync), rastaurantId);
+      _logger.LogInformation("Method: {methodName} called with restaurantId: {restaurantId}", nameof(CreateReviewsForRestaurantAsync), restaurantId);
 
       var userId = Request.Headers["UserId"].FirstOrDefault();
 
       if (string.IsNullOrEmpty(userId))
       {
-        _logger.LogCritical("Method: {methodName} header value userId is null", nameof(CreateReviewsForRastaurantAsync));
+        _logger.LogCritical("Method: {methodName} header value userId is null", nameof(CreateReviewsForRestaurantAsync));
 
         return Unauthorized();
       }
 
-      var result = await _application.CreateReviewForRastaurantAsync(dto, rastaurantId, Convert.ToInt32(userId));
+      var result = await _application.CreateReviewForRestaurantAsync(dto, restaurantId, Convert.ToInt32(userId));
 
       if (result is null) return BadRequest("User has allready created a review for that rastuarant");
       else return Ok(result);
     }
 
     [HttpGet]
-    [Route("rastaurants/{rastaurant-id:int}/reviews")]
-    public async Task<ActionResult<IEnumerable<ReviewReadDto>>> GetReviewsForRastaurantAsync([FromRoute(Name = "rastaurant-id")] int rastaurantId)
+    [Route("restaurants/{restaurant-id:int}/reviews")]
+    public async Task<ActionResult<IEnumerable<ReviewReadDto>>> GetReviewsForRestaurantAsync([FromRoute(Name = "restaurant-id")] int restaurantId)
     {
-      _logger.LogInformation("Method: {methodName} called with rastaurantId: {rastaurantId}", nameof(GetReviewsForRastaurantAsync), rastaurantId);
+      _logger.LogInformation("Method: {methodName} called with restaurantId: {restaurantId}", nameof(GetReviewsForRestaurantAsync), restaurantId);
 
-      return Ok(await _application.GetReviewsForRastaurantAsync(rastaurantId));
+      return Ok(await _application.GetReviewsForRestaurantAsync(restaurantId));
     }
   }
 }

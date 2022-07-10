@@ -16,14 +16,14 @@ namespace ReviewApi.Persistence.DataService
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async Task<IEnumerable<ReviewReadDto>> GetReviewsForRastaurantAsync(int rastaurantId)
+    public async Task<IEnumerable<ReviewReadDto>> GetReviewsForRestaurantAsync(int restaurantId)
     {
-      _logger.LogInformation("Method: {methodName} called with rastaurantId: {rastaurantId}", nameof(GetReviewsForRastaurantAsync), rastaurantId);
+      _logger.LogInformation("Method: {methodName} called with restaurantId: {restaurantId}", nameof(GetReviewsForRestaurantAsync), restaurantId);
 
       using var context = _contextFactory.CreateDbContext();
 
       return await (from review in context.Reviews
-                    where review.RastaurantReviewed == rastaurantId
+                    where review.RestaurantReviewed == restaurantId
 
                     let reviewScores = (from score in review.Scores
                                         select new ReviewScoreDto
@@ -37,22 +37,22 @@ namespace ReviewApi.Persistence.DataService
                     select reviewDto).ToListAsync();
     }
 
-    public async Task<int?> CreateReviewFormRastaurantAsync(ReviewCreateDto review, int rastaurantId, int userId)
+    public async Task<int?> CreateReviewFormRestaurantAsync(ReviewCreateDto review, int restaurantId, int userId)
     {
-      _logger.LogInformation("Method: {methodName} called with rastaurantId: {rastaurantId}, userId: {userId}", nameof(CreateReviewFormRastaurantAsync), rastaurantId, userId);
+      _logger.LogInformation("Method: {methodName} called with restaurantId: {restaurantId}, userId: {userId}", nameof(CreateReviewFormRestaurantAsync), restaurantId, userId);
 
       using var context = _contextFactory.CreateDbContext();
 
-      var existingReview = await context.Reviews.FirstOrDefaultAsync(a => a.RastaurantReviewed == rastaurantId && a.CreatedByUser == userId);
+      var existingReview = await context.Reviews.FirstOrDefaultAsync(a => a.RestaurantReviewed == restaurantId && a.CreatedByUser == userId);
 
       if (existingReview is not null)
       {
-        _logger.LogError("Method: {methodName}. Review allready for rastaurant: {rastaurantId} written existed by: {userId}", nameof(CreateReviewFormRastaurantAsync), rastaurantId, userId);
+        _logger.LogError("Method: {methodName}. Review allready for restaurant: {restaurantId} written existed by: {userId}", nameof(CreateReviewFormRestaurantAsync), restaurantId, userId);
 
         return null;
       }
 
-      var newEntity = Map(review, rastaurantId, userId);
+      var newEntity = Map(review, restaurantId, userId);
 
       context.Reviews.Add(newEntity);
       await context.SaveChangesAsync();
@@ -60,13 +60,13 @@ namespace ReviewApi.Persistence.DataService
       return newEntity.Id;
     }
 
-    private Review Map(ReviewCreateDto dto, int rastaurantId, int userId)
+    private Review Map(ReviewCreateDto dto, int restaurantId, int userId)
     {
       return new Review
       {
         Description = dto.Description,
         ImageName = dto.ImageName,
-        RastaurantReviewed = rastaurantId,
+        RestaurantReviewed = restaurantId,
         CreatedByUser = userId,
         CreationDate = DateTime.Now,
         Scores = dto.Scores.Select(a => new ReviewScore

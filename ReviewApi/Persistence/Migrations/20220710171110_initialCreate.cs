@@ -19,7 +19,7 @@ namespace ReviewApi.Persistence.Migrations
                     ImageName = table.Column<string>(type: "TEXT", nullable: true),
                     CreatedByUser = table.Column<int>(type: "INTEGER", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    RastaurantReviewed = table.Column<int>(type: "INTEGER", nullable: false)
+                    RestaurantReviewed = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

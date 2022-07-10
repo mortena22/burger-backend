@@ -25,11 +25,11 @@ namespace ReviewApi.Test.Persistence.DataService
       return new ReviewDataService(_dbContextFactory, _logger);
     }
 
-    public void CreateReviewsForRastaurant(int rastaurantId)
+    public void CreateReviewsForRestaurant(int restaurantId)
     {
       using var context = _dbContextFactory.CreateDbContext();
 
-      foreach (var review in AddReviews(context, rastaurantId))
+      foreach (var review in AddReviews(context, restaurantId))
       {
         AddReviewScore(context, 1, review.Id);
         AddReviewScore(context, 2, review.Id);
@@ -39,7 +39,7 @@ namespace ReviewApi.Test.Persistence.DataService
       context.SaveChanges();
     }
 
-    public void CreateReviewForRastaurant(int rastaurantId, int userId)
+    public void CreateReviewForRestaurant(int restaurantId, int userId)
     {
       using var context = _dbContextFactory.CreateDbContext();
 
@@ -49,7 +49,7 @@ namespace ReviewApi.Test.Persistence.DataService
         ImageName = "stock_image",
         CreationDate = DateTime.Now,
         CreatedByUser = userId,
-        RastaurantReviewed = rastaurantId
+        RestaurantReviewed = restaurantId
       };
       context.Reviews.Add(review);
       context.SaveChanges();
@@ -78,7 +78,7 @@ namespace ReviewApi.Test.Persistence.DataService
       });
     }
 
-    private List<Review> AddReviews(ReviewContext context, int rastaurantId)
+    private List<Review> AddReviews(ReviewContext context, int restaurantId)
     {
       var reviews = new List<Review>
       {
@@ -88,7 +88,7 @@ namespace ReviewApi.Test.Persistence.DataService
           ImageName = "stock_image",
           CreationDate = DateTime.Now,
           CreatedByUser = 10,
-          RastaurantReviewed = rastaurantId
+          RestaurantReviewed = restaurantId
         },
         new Review
         {
@@ -96,7 +96,7 @@ namespace ReviewApi.Test.Persistence.DataService
           ImageName = "nasty_burger_image",
           CreationDate = DateTime.Now,
           CreatedByUser = 27,
-          RastaurantReviewed = rastaurantId
+          RestaurantReviewed = restaurantId
         }
       };
 

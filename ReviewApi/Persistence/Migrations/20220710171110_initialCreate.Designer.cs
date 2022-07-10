@@ -11,7 +11,7 @@ using ReviewApi.Persistence.Context;
 namespace ReviewApi.Persistence.Migrations
 {
     [DbContext(typeof(ReviewContext))]
-    [Migration("20220710131948_initialCreate")]
+    [Migration("20220710171110_initialCreate")]
     partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace ReviewApi.Persistence.Migrations
                     b.Property<string>("ImageName")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RastaurantReviewed")
+                    b.Property<int>("RestaurantReviewed")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
