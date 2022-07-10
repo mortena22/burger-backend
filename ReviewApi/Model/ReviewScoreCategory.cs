@@ -1,6 +1,6 @@
 ﻿namespace ReviewApi.Model
 {
-  public enum ReviewScoreType
+  public enum ReviewScoreCategory
   {
     Taste = 1,
     Texture = 2,

@@ -14,5 +14,7 @@
     public string ImageName { get; set; }
 
     public IEnumerable<ReviewScoreDto> Scores { get; set; }
+
+    public decimal AvargeScore => Scores.Average(a => a.Score);
   }
 }

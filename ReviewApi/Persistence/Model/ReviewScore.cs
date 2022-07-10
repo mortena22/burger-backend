@@ -1,14 +1,13 @@
 ﻿namespace ReviewApi.Persistence.Model
 {
+  #nullable disable
+
   public class ReviewScore
   {
-    public ReviewScore(ReviewScoreCategory category)
-    {
-      Category = category;
-    }
-
     public int Id { get; set; }
-    public ReviewScoreCategory Category { get; set; }
     public decimal Score { get; set; }
+
+    public int ReviewId { get; set; }
+    public int CategoryId { get; set; }
   }
 }

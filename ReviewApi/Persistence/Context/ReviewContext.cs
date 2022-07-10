@@ -3,7 +3,7 @@ using ReviewApi.Persistence.Model;
 
 namespace ReviewApi.Persistence.Context
 {
-  public class ReviewContext : DbContext, IReviewContext
+  public class ReviewContext : DbContext
   {
     public ReviewContext(DbContextOptions options) : base(options)
     {
